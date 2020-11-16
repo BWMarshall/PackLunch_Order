@@ -9,8 +9,9 @@
 <?php
 session_start(); 
 echo("Logged in as: ". $_SESSION['Name'].  "<br>");
+echo($_SESSION['Role']);
 if (!isset($_SESSION['Name'])){   
-    //header("Location:login.php");
+    header("Location:login.php");
 }
 ?>
 <br>

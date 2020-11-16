@@ -12,7 +12,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $hashed= $row['Password'];
     $attempt= $_POST['Pword'];
     if(password_verify($attempt,$hashed)){
-        $_SESSION['Role']=$_POST['Role'];
+        $_SESSION['Role']=$row['Role'];
         $_SESSION['Name']=$_POST['Username'];
         header('Location: Menu.php');
     }else{

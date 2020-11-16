@@ -25,12 +25,11 @@
     <br>
     <?php
 
-   /*  session_start(); 
-    echo("logged in as: ". $_SESSION['name'].  "<br>");
-    if (!isset($_SESSION['name']))
-    {   
+    session_start(); 
+    echo("logged in as: ". $_SESSION['Name'].  "<br>");
+    if ($_SESSION['Role'] != 1) {   
         header("Location:login.php");
-    } */
+    }
 
 
     include_once('connection.php');
