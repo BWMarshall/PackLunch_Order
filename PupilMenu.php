@@ -2,22 +2,23 @@
 <html>
 <head>
   
-   <title>Menu</title>
+   <title>Admin Menu</title>
   
 </head>
 <body>
 <?php
 session_start(); 
 echo("Logged in as: ". $_SESSION['Name'].  "<br>");
-echo($_SESSION['Role']);
-if (!isset($_SESSION['Name'])){   
-    header("Location:login.php");
+if ($_SESSION['Role'] != 0){   
+    header("Location:AdminMenu.php");
+}elseif (!isset($_SESSION['Name'])) {
+  header("Location:Login.php");
 }
 ?>
 <br>
-<form action="CreateUsers.php" method="get">
+<!-- <form action="CreateUsers.php" method="get">
   <input type="submit" value="Add Users">
-</form>
+</form> -->
 <br>
 
 <form action="Logout.php" method="get">

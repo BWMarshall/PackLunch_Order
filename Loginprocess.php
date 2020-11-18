@@ -14,9 +14,8 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     if(password_verify($attempt,$hashed)){
         $_SESSION['Role']=$row['Role'];
         $_SESSION['Name']=$_POST['Username'];
-        header('Location: Menu.php');
+        header('Location: AdminMenu.php');
     }else{
-
         header('Location: Login.php');
     }
 }

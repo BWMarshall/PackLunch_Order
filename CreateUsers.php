@@ -28,7 +28,7 @@
     session_start(); 
     echo("logged in as: ". $_SESSION['Name'].  "<br>");
     if ($_SESSION['Role'] != 1) {   
-        header("Location:login.php");
+        header("Location:PupilMenu.php");
     }
 
 
@@ -40,6 +40,11 @@
     echo($row["Forename"].' '.$row["Surname"]."  ".$row["House"]."<br>");
     }
     ?>
+    <br>
+    <form action="AdminMenu.php" method="get">
+        <input type="submit" value="Menu">
+    </form>
+
 
 
 
