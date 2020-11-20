@@ -5,7 +5,7 @@
 
      
 
-    <title>Page title</title> 
+    <title>adding User</title> 
 
      
 
@@ -13,11 +13,11 @@
 
 <body> 
 <?php
-/* session_start(); 
-if (!isset($_SESSION['name']))
+session_start(); 
+if (!isset($_SESSION['Name']))
 {   
     header("Location:login.php");
-} */
+} 
 
 
     include_once("connection.php"); 
@@ -57,11 +57,7 @@ if (!isset($_SESSION['name']))
     $conn=null;
     header('Location: CreateUsers.php');
 ?> 
-<!-- <br>
-<form action="Menu.php" method="get">
-  <input type="submit" value="To Menu">
-</form>
-<br>   -->
+
 
 </body> 
 

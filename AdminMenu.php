@@ -22,6 +22,11 @@ if ($_SESSION['Role'] != 1){
   <input type="submit" value="Add Users">
 </form>
 <br>
+<br>
+<form action="StockSettings.php" method="get">
+  <input type="submit" value="Stock Updates">
+</form>
+<br>
 
 <form action="Logout.php" method="get">
   <input type="submit" value="Log out">
