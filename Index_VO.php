@@ -1,11 +1,16 @@
 <?php
-require_once('connection.php');
+session_start(); 
+echo("logged in as: ". $_SESSION['Name'].  "<br>");
+if ($_SESSION['Role'] != 1) {   
+    header("Location:PupilMenu.php");
+}
+require_once('Config.php');
 ///This shit doesnt work ask c man!!!!!!!!!!!!!!!!!!!!!! cant read data into the variable for the table aorund line 5-8, Too BAd!
 $sql = "SELECT Username, SWID, SNID, DKID, Date, MealMissed FROM tbl_orders";
 $result = $conn->query($sql);
 $arr_orders = [];
 if ($result->num_rows > 0) {
-    $arr_orders = $result->fetch_all(MYSQLI_ASSOC);
+$arr_orders = $result->fetch_all(MYSQLI_ASSOC);
 }
 ?>
 <!DOCTYPE html>
