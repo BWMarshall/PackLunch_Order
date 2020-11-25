@@ -5,7 +5,7 @@ if ($_SESSION['Role'] != 1) {
     header("Location:PupilMenu.php");
 }
 require_once('Config.php');
-///This shit doesnt work ask c man!!!!!!!!!!!!!!!!!!!!!! cant read data into the variable for the table aorund line 5-8, Too BAd!
+///This shit only just works, had to create alternate connection path... Too Bad!
 $sql = "SELECT Username, SWID, SNID, DKID, Date, MealMissed FROM tbl_orders";
 $result = $conn->query($sql);
 $arr_orders = [];
@@ -23,6 +23,12 @@ $arr_orders = $result->fetch_all(MYSQLI_ASSOC);
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"/>
 </head>
 <body>
+ <!--  back to menu button -->
+ <br>
+    <form action="AdminMenu.php" method="get">
+        <input type="submit" value="Menu">
+    </form>
+    <br>
     <table id="OrderTable">
         <thead>
             <th>Username</th>
@@ -55,5 +61,30 @@ $arr_orders = $result->fetch_all(MYSQLI_ASSOC);
         $('#OrderTable').DataTable();
     });
     </script>
+    <br>
+    <?php
+        $CurrentDate = date("Y-m-d");
+        echo($CurrentDate);
+        echo(" Today's Orders:");
+        include_once('connection.php');
+        $stmt = $conn->prepare("SELECT * FROM Tbl_orders Where Date  = :CurrentDate ");
+        $stmt->bindParam(':CurrentDate', $CurrentDate);   
+        $stmt->execute();
+        
+        echo "<br>";
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo($row["Username"].' SW: '.$row["SWID"]." SN: ".$row["SNID"]. " DK: ".$row["DKID"]."<br>");
+        }
+    ?>
+
+        <!--Links to complete order to delete daily orders -->
+        <br>
+        <form action="CompleteOrder.php" method="get">
+        <input type="submit" value="Complete Daily orders">
+        </form>
+        <br>
+
+
+    
 </body>
 </html>
