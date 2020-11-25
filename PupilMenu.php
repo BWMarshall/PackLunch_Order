@@ -15,12 +15,12 @@ if ($_SESSION['Role'] != 0){
   header("Location:Login.php");
 }
 ?>
-<br>
-<!-- <form action="CreateUsers.php" method="get">
-  <input type="submit" value="Add Users">
-</form> -->
-<br>
 
+<br>
+<form action="CreateOrder.php" method="get">
+  <input type="submit" value="Create Order">
+</form>
+<br>
 <form action="Logout.php" method="get">
   <input type="submit" value="Log out">
 </form>
