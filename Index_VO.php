@@ -1,18 +1,31 @@
 <?php
+///Session Stuff -----------------------:
 session_start(); 
 echo("logged in as: ". $_SESSION['Name'].  "<br>");
 if ($_SESSION['Role'] != 1) {   
     header("Location:PupilMenu.php");
 }
+
+
 require_once('Config.php');
-///This shit only just works, had to create alternate connection path... Too Bad!
-$sql = "SELECT Username, SWID, SNID, DKID, Date, MealMissed FROM tbl_orders";
+///This only just works, had to create alternate connection path... Too Bad!
+$sql =' SELECT tu.house as hs, dk.itemname as drink, sw.itemname as sandw, sn.itemname as snack, tu.Username, Date, MealMissed  
+        FROM Tbl_orders 
+        INNER JOIN tbl_mealoptions as dk ON dk.foodid = Tbl_orders.DKID
+        INNER JOIN tbl_mealoptions as sw ON sw.foodid = Tbl_orders.SWID
+        INNER JOIN tbl_mealoptions as sn ON sn.foodid = Tbl_orders.SNID
+        INNER JOIN tbl_users as tu ON tu.Username = Tbl_orders.Username';
+
+
+//"SELECT Username, SWID, SNID, DKID, Date, MealMissed FROM tbl_orders";
 $result = $conn->query($sql);
 $arr_orders = [];
 if ($result->num_rows > 0) {
 $arr_orders = $result->fetch_all(MYSQLI_ASSOC);
 }
 ?>
+
+<!-- Css Stuff -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +35,9 @@ $arr_orders = $result->fetch_all(MYSQLI_ASSOC);
     <title>Datatable</title>
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"/>
 </head>
+
+
+
 <body>
  <!--  back to menu button -->
  <br>
@@ -29,9 +45,11 @@ $arr_orders = $result->fetch_all(MYSQLI_ASSOC);
         <input type="submit" value="Menu">
     </form>
     <br>
+<!-- table stuff -->
     <table id="OrderTable">
         <thead>
             <th>Username</th>
+            <th>House</th>
             <th>Sandwich</th>
             <th>Snack</th>
             <th>Drink</th>
@@ -44,9 +62,10 @@ $arr_orders = $result->fetch_all(MYSQLI_ASSOC);
                 <?php foreach($arr_orders as $order) { ?>
                     <tr>
                         <td><?php echo $order['Username']; ?></td>
-                        <td><?php echo $order['SWID']; ?></td>
-                        <td><?php echo $order['SNID']; ?></td>
-                        <td><?php echo $order['DKID']; ?></td>
+                        <td><?php echo $order['hs']; ?></td>
+                        <td><?php echo $order['sandw']; ?></td>
+                        <td><?php echo $order['snack']; ?></td>
+                        <td><?php echo $order['drink']; ?></td>
                         <td><?php echo $order['Date']; ?></td>
                         <td><?php echo $order['MealMissed']; ?></td>
                     </tr>
@@ -67,13 +86,19 @@ $arr_orders = $result->fetch_all(MYSQLI_ASSOC);
         echo($CurrentDate);
         echo(" Today's Orders:");
         include_once('connection.php');
-        $stmt = $conn->prepare("SELECT * FROM Tbl_orders Where Date  = :CurrentDate ");
+        $stmt = $conn->prepare("SELECT tu.house as hs, dk.itemname as drink, sw.itemname as sandw, sn.itemname as snack, tu.Username, Date, MealMissed  
+            FROM Tbl_orders 
+            INNER JOIN tbl_mealoptions as dk ON dk.foodid = Tbl_orders.DKID
+            INNER JOIN tbl_mealoptions as sw ON sw.foodid = Tbl_orders.SWID
+            INNER JOIN tbl_mealoptions as sn ON sn.foodid = Tbl_orders.SNID
+            INNER JOIN tbl_users as tu ON tu.Username = Tbl_orders.Username
+            Where Date  = :CurrentDate ");
         $stmt->bindParam(':CurrentDate', $CurrentDate);   
         $stmt->execute();
         
         echo "<br>";
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        echo($row["Username"].' SW: '.$row["SWID"]." SN: ".$row["SNID"]. " DK: ".$row["DKID"]."<br>");
+        echo($row["Username"].', '.$row["hs"].', '.$row["sandw"]." SN: ".$row["snack"]. " DK: ".$row["drink"]."<br>");
         }
     ?>
 
