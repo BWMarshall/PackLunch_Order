@@ -14,14 +14,17 @@
 <body class="bg">
 
 
-<div class="container bg-light text-dark" >
+<div class="container bg-light text-dark   text-center  pb-sm-5" >
       <Br>
       <h1>Packed Meal Ordering</h1> 
       <br>
-   <!-- Trigger Modal -->
+      <img src = "https://pbs.twimg.com/profile_images/1101496837767397376/zdGxVOi3_400x400.png" ">
+      <br>
+      <br>
       <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Login</button>
       <br>
-      <img src = "https://pbs.twimg.com/profile_images/1101496837767397376/zdGxVOi3_400x400.png" class="mx-auto d-block">
+      <br>
+     
 </div>
    <!-- Modal -->
    <div class="modal fade" id="myModal" role="dialog">
